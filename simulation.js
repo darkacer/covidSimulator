@@ -9,6 +9,7 @@ let dataInfected = new Map();
 let prevTime = 0
 let day0 = 0
 let day = 0
+alert('Press Start simulation Button at the bottom')
 	function startGame() {			
 		myGameArea.start();
 	}
