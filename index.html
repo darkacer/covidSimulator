@@ -1,0 +1,55 @@
+<html>
+	<head>
+	<!-- <script src="https://unpkg.com/js-quadtree"></script> -->
+	
+	<script src='simulation.js'></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<style>
+		canvas {
+			border:1px solid #d3d3d3;
+			background-color: #f1f1f1;
+		}
+		.block {
+			display: block;
+			width: 100%;
+			border: none;
+			background-color: #4CAF50;
+			color: white;
+			padding: 14px 28px;
+			font-size: 16px;
+			cursor: pointer;
+			text-align: center;
+		}
+
+		.block:hover {
+			background-color: #ddd;
+			color: black;
+		}
+		</style>
+	</head>
+	
+	<body onload="startGame()" style='display: inline-block;'>
+	<br>
+		<span style='display: inline-block;'>
+		<b>
+			Days : <span id='days'></span><br>
+			Susceptible/Healthy People <font color="green">(GREEN)</font>: <span id='susceptible'></span><br>
+			Current Infected People (<font color="red">RED</font>): <span id='infected'></span><br>
+			Demand for Hosp (<font color="blue">BLUE</font>): <span id='quarantine'></span><br>
+			Dead People (Removed)(<font color="black">BLACK</font>): <span id='deadpeople'></span><br>
+			Recovered People (Removed)(<font color="yellow">YELLOW</font>): <span id='recovered'></span><br>
+			</b><br>
+			Number Of People :<input id='numberOfPeople' type="number" value = 200 min = 0><br>
+			Number infected People :<input id='infectedPeople' type="number" value = 2 min = 0><br>
+			Hospital Capacity :<input id='hospcapacity' type="number" value = 40 min = 0><br>
+			Mobility Percentage :<input id='mobilityPer' type="number" value = 40 min = 10  max=100><br>
+			<button class="block" onclick="kickStart()">Start Simulation</button>
+		</span>
+		<span style='display: inline-block;'>
+			<a href="https://www.youtube.com/watch?v=gxAaO2rsdIs&t=749s">Simulating an epidemic -- Youtube Link for more awesome simulations </a>
+			<canvas id="line-chart" style="display: block;" width="1000" height="500"></canvas>
+		</span>		
+	</body>
+	<br>	
+</html>
