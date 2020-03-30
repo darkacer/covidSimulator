@@ -10,13 +10,14 @@ let dataCurrentInfected = new Map();
 let dataQuaratined = new Map();
 let dataDead = new Map();
 let dataRecovered = new Map();
-
+let dataThreshold = new Map();
+let HC;
 let prevTime = 0
 let day0 = 0
 let day = 0
 let myChart;
 //let quadtree;
-alert('Press Start simulation Button at the bottom')
+alert('Press Start simulation Button at the bottom. Read the transcript below')
 function startGame() {
 	myGameArea.start();
 	drawChart()
@@ -34,6 +35,10 @@ function kickStart() {
 	hospCapacity = document.querySelector('#hospcapacity').value;
 	//quadtree = new QT.QuadTree(new QT.Box(0, 0, xWidth, yWidth), {removeEmptyNodes : true, capacity: 5});
 	
+	numberOfPeople = numberOfPeople > 10000 ? 10000 : numberOfPeople
+	infectedPeople = infectedPeople < 1 ? 1 : infectedPeople
+	HC = hospCapacity;
+
 	myGamePieces = []
 	let count = 0;
 	for(let i = 0; i < numberOfPeople; i++) {
@@ -149,7 +154,7 @@ function updateGameArea() {
 	// tree reccursive 
 	//console.log("quadtree is ######", quadtree)
 	//treeReccursive(quadtree)
-	
+	console.log('hospCapacity', hospCapacity)
 	//prevTime = performance.now()
 	day = parseInt((performance.now() - day0) / 1000)
 	if (day >= 60) myGameArea.stop();
@@ -157,6 +162,7 @@ function updateGameArea() {
 	dataQuaratined.set(day, quaratinedPersons.length)
 	dataDead.set(day, deadPersons.length)
 	dataRecovered.set(day, recoveredPersons.length)
+	dataThreshold.set(day, HC)
 	document.querySelector('#days').innerHTML = day;
 	document.querySelector('#infected').innerHTML = infectedPersons.length;
 	document.querySelector('#susceptible').innerHTML = nonInfectedPersons.length;
@@ -264,7 +270,7 @@ function component(width, height, color, x, y) {
 	
 	this.fate = function(quarCount) {
 		if (this.gotHospital) {			
-			if (probability(0.1)) {
+			if (probability(0.05)) {
 				this.color = 'black'
 				//hospCapacity++
 				console.log('inside hosp', hospCapacity)
@@ -272,7 +278,7 @@ function component(width, height, color, x, y) {
 				this.color = 'yellow'
 			}
 		} else {
-			if (probability(0.5)) {
+			if (probability(0.35)) {
 				this.color = 'black'
 				console.log('outside hosp', hospCapacity)
 				//hospCapacity++
@@ -281,7 +287,8 @@ function component(width, height, color, x, y) {
 				//hospCapacity++
 			}
 		}		
-		hospCapacity = hospCapacity > 50 ? 50 : hospCapacity + 1
+		hospCapacity = hospCapacity > HC ? HC : hospCapacity + 1
+		
 	}
 	
 	this.x = x;
@@ -352,6 +359,12 @@ function drawChart() {
 			label: "Recovered People",
 			borderColor: "#ffff00",
 			fill: false
+		  },
+		  {
+			data: [...dataThreshold.values()],
+			label: "HealthCare Capacity",
+			borderColor: "#00ff00",
+			fill: false
 		  }
 		]
 	  },
@@ -391,5 +404,6 @@ var updateChart = function() {
 	myChart.data.datasets[1].data = [...dataQuaratined.values()];
 	myChart.data.datasets[2].data = [...dataDead.values()];
 	myChart.data.datasets[3].data = [...dataRecovered.values()];
+	myChart.data.datasets[4].data = [...dataThreshold.values()];
 	myChart.update();
 };

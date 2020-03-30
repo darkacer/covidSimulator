@@ -40,16 +40,26 @@
 			Dead People (Removed)(<font color="black">BLACK</font>): <span id='deadpeople'></span><br>
 			Recovered People (Removed)(<font color="yellow">YELLOW</font>): <span id='recovered'></span><br>
 			</b><br>
-			Number Of People :<input id='numberOfPeople' type="number" value = 200 min = 0><br>
+			Number Of People :<input id='numberOfPeople' type="number" value = 200 min = 100 max = 10000><br>
 			Number infected People :<input id='infectedPeople' type="number" value = 2 min = 0><br>
-			Hospital Capacity :<input id='hospcapacity' type="number" value = 40 min = 0><br>
+			HealthCare Capacity :<input id='hospcapacity' type="number" value = 40 min = 0><br>
 			Mobility Percentage :<input id='mobilityPer' type="number" value = 40 min = 10  max=100><br>
 			<button class="block" onclick="kickStart()">Start Simulation</button>
 		</span>
 		<span style='display: inline-block;'>
 			<a href="https://www.youtube.com/watch?v=gxAaO2rsdIs&t=749s">Simulating an epidemic -- Youtube Link for more awesome simulations </a>
 			<canvas id="line-chart" style="display: block;" width="1000" height="500"></canvas>
-		</span>		
+		</span>	
+		<div>
+			<b>
+			The simulation will last for 60 days (60 secs)<br>
+			Only given amount of people are infected at the start <br>
+			Once someone is infected (RED), after 5 days they start showing symptoms and isolate themselves and need a hospital / special care <br>
+			After 5 more days if this demand (BLUE) is more than HealthCare capacity (GREEN), there is 35% chance of death <br>
+			If this demand stays below HealthCare capacity, there is only 5% chance<br>
+			#flattenTheCurve by reducing mobility
+			</b>
+		</div>
 	</body>
 	<br>	
 </html>
